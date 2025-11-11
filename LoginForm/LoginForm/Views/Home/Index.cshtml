@@ -1,0 +1,39 @@
+﻿@model LoginForm.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container d-flex align-items-center justify-content-center vh-100">
+    <div class="card shadow p-4 w-100" style="max-width: 400px;">
+        <h3 class="text-center mb-3 fw-semibold text-primary">Login</h3>
+
+        <form asp-action="Index" method="post" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label fw-medium"></label>
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label fw-medium"></label>
+                <input asp-for="Password" class="form-control" placeholder="Password" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">Login</button>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div id="alertBox" class="alert mt-3 @(Model.Success ? "alert-success" : "alert-danger")" role="alert">
+                <i class="bi @(Model.Success ? "bi-check-circle-fill" : "bi-exclamation-triangle-fill") me-2"></i>
+                @Model.Message
+            </div>
+        }
+
+        @if (Model.Success && Model.Entity != null)
+        {
+            <partial name="_LoginResult" model="Model.Entity"/>
+        }
+    </div>
+</div>
